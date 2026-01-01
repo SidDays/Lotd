@@ -269,5 +269,20 @@ namespace Lotd
             }
             return null;
         }
+        public void ExportOwnedCards(string path)
+        {
+            List<string> lines = new List<string>();
+            int cardCount = Math.Min(CardList.Cards.Length, Program.Manager.CardManager.CardsByIndex.Count);
+            for (int i = 0; i < cardCount; i++)
+            {
+                CardState state = CardList.Cards[i];
+                if (state.Count > 0)
+                {
+                    FileFormats.CardInfo card = Program.Manager.CardManager.CardsByIndex[i];
+                    lines.Add(string.Format("{0} {1}x {2}", card.CardId, state.Count, card.Name));
+                }
+            }
+            File.WriteAllLines(path, lines);
+        }
     }
 }

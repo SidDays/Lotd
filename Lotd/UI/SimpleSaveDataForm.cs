@@ -191,6 +191,50 @@ namespace Lotd.UI
             }
         }
 
+        private void exportButton_Click(object sender, EventArgs e)
+        {
+            bool saveToMemory = Program.MemTools != null && Program.MemTools.HasProcessHandle;
+
+            GameSaveData saveData = new GameSaveData(Program.Version);
+
+            if (saveToMemory)
+            {
+                byte[] saveBuffer = Program.MemTools.ReadSaveData();
+                if (saveBuffer == null)
+                {
+                    return;
+                }
+                if (!saveData.Load(saveBuffer))
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (!saveData.Load())
+                {
+                    return;
+                }
+            }
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        saveData.ExportOwnedCards(sfd.FileName);
+                        MessageBox.Show("Cards exported successfully to " + sfd.FileName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to export cards: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
         private void SetCampaignState(GameSaveData saveData, DuelSeries series, bool p0Available, bool p0, bool p100)
         {
             if (p0Available)

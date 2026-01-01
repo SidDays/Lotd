@@ -93,6 +93,7 @@
             this.campaignVrains0PercentRadioButton = new System.Windows.Forms.RadioButton();
             this.campaignVrainsAvailable0PercentRadioButton = new System.Windows.Forms.RadioButton();
             this.campaignVrainsUnchangedRadioButton = new System.Windows.Forms.RadioButton();
+            this.exportButton = new System.Windows.Forms.Button();
             this.campaignYuGiOhGroupBox.SuspendLayout();
             this.campaignGXGroupBox.SuspendLayout();
             this.campaign5DsGroupBox.SuspendLayout();
@@ -657,8 +658,19 @@
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
+            // exportButton
+            // 
+            this.exportButton.Location = new System.Drawing.Point(219, 2);
+            this.exportButton.Name = "exportButton";
+            this.exportButton.Size = new System.Drawing.Size(100, 23);
+            this.exportButton.TabIndex = 49;
+            this.exportButton.Text = "Export Cards...";
+            this.exportButton.UseVisualStyleBackColor = true;
+            this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
+            // 
             // applyPanel
             // 
+            this.applyPanel.Controls.Add(this.exportButton);
             this.applyPanel.Controls.Add(this.applyButton);
             this.applyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.applyPanel.Location = new System.Drawing.Point(0, 565);
@@ -981,6 +993,7 @@
         private System.Windows.Forms.TextBox duelPointsTextBox;
         private System.Windows.Forms.Label duelPointsLabel;
         private System.Windows.Forms.Button applyButton;
+        private System.Windows.Forms.Button exportButton;
         private System.Windows.Forms.Panel applyPanel;
         private System.Windows.Forms.RadioButton campaignYuGiOhAvailable0PercentRadioButton;
         private System.Windows.Forms.RadioButton campaignGXAvailable0PercentRadioButton;
