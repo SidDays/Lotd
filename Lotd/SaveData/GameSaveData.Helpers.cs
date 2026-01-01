@@ -272,14 +272,24 @@ namespace Lotd
         public void ExportOwnedCards(string path)
         {
             List<string> lines = new List<string>();
-            int cardCount = Math.Min(CardList.Cards.Length, Program.Manager.CardManager.CardsByIndex.Count);
-            for (int i = 0; i < cardCount; i++)
+
+            // Sort by CardId to ensure consistent output (and likely match user expectations)
+            var sortedCards = Program.Manager.CardManager.Cards.Values.OrderBy(c => c.CardId);
+
+            foreach (FileFormats.CardInfo card in sortedCards)
             {
-                CardState state = CardList.Cards[i];
-                if (state.Count > 0)
+                // Use card.CardId as the index into CardList.Cards
+                if (card.CardId >= 0 && card.CardId < CardList.Cards.Length)
                 {
-                    FileFormats.CardInfo card = Program.Manager.CardManager.CardsByIndex[i];
-                    lines.Add(string.Format("{0} {1}x {2}", card.CardId, state.Count, card.Name));
+                    CardState state = CardList.Cards[card.CardId];
+                    if (state.Count > 0)
+                    {
+                        long ydkId = YdkHelper.GetYdkId(card.CardId);
+                        for (int j = 0; j < state.Count; j++)
+                        {
+                            lines.Add(string.Format("{0} // {1} | {2}", ydkId, card.CardId, card.Name));
+                        }
+                    }
                 }
             }
             File.WriteAllLines(path, lines);

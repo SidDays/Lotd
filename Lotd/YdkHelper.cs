@@ -27,6 +27,16 @@ namespace Lotd
         /// </summary>
         public const string FileExtension = ".ydk";
 
+        public static long GetYdkId(long officialId)
+        {
+            long ydkId;
+            if (officialIdToYdkId.TryGetValue(officialId, out ydkId))
+            {
+                return ydkId;
+            }
+            return 0;
+        }
+
         public static MemTools.YdcDeck LoadDeck(string filePath)
         {
             // Loader is based on https://github.com/Fluorohydride/ygopro/blob/master/gframe/deck_manager.cpp
